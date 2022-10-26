@@ -8,17 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		E2DD460429096F90008BF3A3 /* NodeTutorialSwiftUiCodeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DD460329096F90008BF3A3 /* NodeTutorialSwiftUiCodeApp.swift */; };
-		E2DD460629096F90008BF3A3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DD460529096F90008BF3A3 /* ContentView.swift */; };
 		E2DD460829096F92008BF3A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2DD460729096F92008BF3A3 /* Assets.xcassets */; };
 		E2DD460B29096F92008BF3A3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2DD460A29096F92008BF3A3 /* Preview Assets.xcassets */; };
+		E2DD461429097015008BF3A3 /* TodoHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DD461329097015008BF3A3 /* TodoHome.swift */; };
+		E2DD4616290970D7008BF3A3 /* TodoHomeAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DD4615290970D7008BF3A3 /* TodoHomeAuth.swift */; };
+		E2DD46182909713D008BF3A3 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DD46172909713D008BF3A3 /* AuthenticationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E2DD460029096F90008BF3A3 /* NodeTutorialSwiftUiCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NodeTutorialSwiftUiCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2DD460329096F90008BF3A3 /* NodeTutorialSwiftUiCodeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTutorialSwiftUiCodeApp.swift; sourceTree = "<group>"; };
-		E2DD460529096F90008BF3A3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E2DD460729096F92008BF3A3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2DD460A29096F92008BF3A3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E2DD461329097015008BF3A3 /* TodoHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoHome.swift; sourceTree = "<group>"; };
+		E2DD4615290970D7008BF3A3 /* TodoHomeAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoHomeAuth.swift; sourceTree = "<group>"; };
+		E2DD46172909713D008BF3A3 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +55,9 @@
 		E2DD460229096F90008BF3A3 /* NodeTutorialSwiftUiCode */ = {
 			isa = PBXGroup;
 			children = (
+				E2DD461229096FCA008BF3A3 /* WithAuthentication */,
+				E2DD461129096FB6008BF3A3 /* AsyncLoadTodos */,
 				E2DD460329096F90008BF3A3 /* NodeTutorialSwiftUiCodeApp.swift */,
-				E2DD460529096F90008BF3A3 /* ContentView.swift */,
 				E2DD460729096F92008BF3A3 /* Assets.xcassets */,
 				E2DD460929096F92008BF3A3 /* Preview Content */,
 			);
@@ -65,6 +70,23 @@
 				E2DD460A29096F92008BF3A3 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E2DD461129096FB6008BF3A3 /* AsyncLoadTodos */ = {
+			isa = PBXGroup;
+			children = (
+				E2DD461329097015008BF3A3 /* TodoHome.swift */,
+			);
+			path = AsyncLoadTodos;
+			sourceTree = "<group>";
+		};
+		E2DD461229096FCA008BF3A3 /* WithAuthentication */ = {
+			isa = PBXGroup;
+			children = (
+				E2DD4615290970D7008BF3A3 /* TodoHomeAuth.swift */,
+				E2DD46172909713D008BF3A3 /* AuthenticationView.swift */,
+			);
+			path = WithAuthentication;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,7 +159,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2DD460629096F90008BF3A3 /* ContentView.swift in Sources */,
+				E2DD461429097015008BF3A3 /* TodoHome.swift in Sources */,
+				E2DD4616290970D7008BF3A3 /* TodoHomeAuth.swift in Sources */,
+				E2DD46182909713D008BF3A3 /* AuthenticationView.swift in Sources */,
 				E2DD460429096F90008BF3A3 /* NodeTutorialSwiftUiCodeApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

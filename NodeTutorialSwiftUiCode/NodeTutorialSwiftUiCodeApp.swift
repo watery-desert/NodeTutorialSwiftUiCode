@@ -11,7 +11,11 @@ import SwiftUI
 struct NodeTutorialSwiftUiCodeApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            // When loading todo from mongodb or memory
+            TodoHome()
+            
+            // When loading todo with auth and JWT
+            MyApp()
         }
     }
 }
