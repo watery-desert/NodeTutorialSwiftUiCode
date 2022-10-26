@@ -8,41 +8,40 @@
 
 import SwiftUI
 
-/// I needed to comment these structs because I marged two project in one
 
-//struct ErrorData : Codable {
-//    var message: String
-//
-//    enum CodingKeys: String, CodingKey {
-//        case message
-//    }
-//}
+struct ErrorData : Codable {
+    var message: String
 
-//struct Todos : Codable {
-//    var message: String
-//    var todos: [Todo]
-//
-//    enum CodingKeys: String, CodingKey {
-//        case message
-//        case todos
-//    }
-//}
+    enum CodingKeys: String, CodingKey {
+        case message
+    }
+}
 
-//struct Todo :Identifiable, Codable {
-//    var id: String?
-//    var task: String
-//    var isDone: Bool
-//
-//
-//    enum CodingKeys: String, CodingKey {
-//        case id
-//        case task
-//        case isDone
-//
-//    }
-//}
+struct Todos : Codable {
+    var message: String
+    var todos: [Todo]
 
-struct TodoHomeAuth: View {
+    enum CodingKeys: String, CodingKey {
+        case message
+        case todos
+    }
+}
+
+struct Todo :Identifiable, Codable {
+    var id: String?
+    var task: String
+    var isDone: Bool
+
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case task
+        case isDone
+
+    }
+}
+
+struct TodoHome: View {
     
     @State private var todos: [Todo] = []
     @State private var showSheet = false
@@ -309,9 +308,9 @@ struct TodoHomeAuth: View {
 
 
 
-typealias OnTapButton = (String, Bool, DismissAction) -> Void
+typealias OnTap = (String, Bool, DismissAction) -> Void
 
-struct TodoSheetView: View {
+struct SheetView: View {
     
     @Environment(\.dismiss) private var dismiss
     @Binding private var showError: Bool

@@ -42,7 +42,7 @@ struct MyApp: View {
     
     var body: some View {
         if isLoggedIn {
-            TodoHomeAuth(isLoggedIn: $isLoggedIn, token: $token)
+            TodoHome(isLoggedIn: $isLoggedIn, token: $token)
         } else {
             AuthenticationView(isLoggedIn: $isLoggedIn, token: $token)
         }
