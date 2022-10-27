@@ -11,7 +11,7 @@ import SwiftUI
 struct NodeTutorialSwiftUiCodeApp: App {
     var body: some Scene {
         WindowGroup {
-            TodoHome()
+            MyApp()
         }
     }
 }

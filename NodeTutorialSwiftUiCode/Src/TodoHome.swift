@@ -47,7 +47,8 @@ struct TodoHome: View {
     @State private var showSheet = false
     @State private var showError = false
     @State private var selectedTodo: Todo?
-
+    @Binding var isLoggedIn: Bool
+    @Binding var token: String
     
     var body: some View {
         NavigationView {
@@ -100,8 +101,12 @@ struct TodoHome: View {
             }
             .navigationTitle("ToDos")
             .toolbar {
-                Button("Add") {
+                Button("+") {
                     showSheet = true
+                }
+                Button(">") {
+                    token = ""
+                    isLoggedIn = false
                 }
             }
             
@@ -142,21 +147,38 @@ struct TodoHome: View {
     
     func getTodos() async throws {
         let url = URL(string: "http://localhost:8000/todo/todos")!
-         
-         var urlRequest = URLRequest(url: url)
-         urlRequest.httpMethod = "GET"
-   
-         let (data, response) = try await URLSession.shared.data(for: urlRequest)
         
-         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-             let errorData = try JSONDecoder().decode(ErrorData.self, from: data).message
-             print("Error \(errorData)")
-             throw URLError(.cannotParseResponse)
-         }
-         
-         let jsonData =  try JSONDecoder().decode(Todos.self, from: data)
-         print(jsonData.message)
-         todos.append(contentsOf: jsonData.todos)
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "GET"
+        urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        let (data, response) = try await URLSession.shared.data(for: urlRequest)
+        
+        //         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+        //             let errorData = try JSONDecoder().decode(ErrorData.self, from: data).message
+        //             print("Error \(errorData)")
+        //             throw URLError(.cannotParseResponse)
+        //         }
+        //
+        //         let jsonData =  try JSONDecoder().decode(Todos.self, from: data)
+        //         print(jsonData.message)
+        //         todos.append(contentsOf: jsonData.todos)
+        
+        if let  response = response as? HTTPURLResponse {
+            
+            if  response.statusCode == 200 {
+                let jsonData =  try JSONDecoder().decode(Todos.self, from: data)
+                print(jsonData.message)
+                todos.append(contentsOf: jsonData.todos)
+            } else if response.statusCode == 401 {
+                token = ""
+                isLoggedIn = false
+                print("Unauthenticated")
+            } else {
+                let errorData = try JSONDecoder().decode(ErrorData.self, from: data).message
+                print("Error \(errorData)")
+                throw URLError(.cannotParseResponse)
+            }
+        }
     }
     
     
@@ -165,23 +187,41 @@ struct TodoHome: View {
         
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
+        urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         guard let encodedTodo = try? JSONEncoder().encode(todo) else {
             return
         }
         let (data, response) = try await URLSession.shared.upload(for: urlRequest, from: encodedTodo)
-        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            let errorData = try JSONDecoder().decode(ErrorData.self, from: data).message
+        //        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+        //            let errorData = try JSONDecoder().decode(ErrorData.self, from: data).message
+        //
+        //            print("Error \(errorData)")
+        //            throw URLError(.cannotParseResponse)
+        //        }
+        //
+        //
+        //        let jsonData =  try JSONDecoder().decode(Todos.self, from: data)
+        //        print(jsonData.message)
+        //        todos = jsonData.todos
+        if let  response = response as? HTTPURLResponse {
             
-            print("Error \(errorData)")
-            throw URLError(.cannotParseResponse)
+            if  response.statusCode == 200 {
+                let jsonData =  try JSONDecoder().decode(Todos.self, from: data)
+                print(jsonData.message)
+                todos = jsonData.todos
+            } else if response.statusCode == 401 {
+                token = ""
+                isLoggedIn = false
+                print("Unauthenticated")
+                
+            } else {
+                let errorData = try JSONDecoder().decode(ErrorData.self, from: data).message
+                print("Error \(errorData)")
+                throw URLError(.cannotParseResponse)
+            }
         }
-        
-        
-        let jsonData =  try JSONDecoder().decode(Todos.self, from: data)
-        print(jsonData.message)
-        todos = jsonData.todos
     }
     
     
@@ -190,23 +230,42 @@ struct TodoHome: View {
         
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "PATCH"
+        urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         guard let encodedTodo = try? JSONEncoder().encode(todo) else {
             return
         }
         let (data, response) = try await URLSession.shared.upload(for: urlRequest, from: encodedTodo)
-        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            let errorData = try JSONDecoder().decode(ErrorData.self, from: data).message
-            
-            print("Error \(errorData)")
-            
-            throw URLError(.cannotParseResponse)
-        }
+        //        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+        //            let errorData = try JSONDecoder().decode(ErrorData.self, from: data).message
+        //
+        //            print("Error \(errorData)")
+        //
+        //            throw URLError(.cannotParseResponse)
+        //        }
+        //
+        //        let jsonData =  try JSONDecoder().decode(Todos.self, from: data)
+        //        print(jsonData.message)
+        //        todos = jsonData.todos
         
-        let jsonData =  try JSONDecoder().decode(Todos.self, from: data)
-        print(jsonData.message)
-        todos = jsonData.todos
+        if let  response = response as? HTTPURLResponse {
+            
+            if  response.statusCode == 200 {
+                let jsonData =  try JSONDecoder().decode(Todos.self, from: data)
+                print(jsonData.message)
+                todos = jsonData.todos
+            } else if response.statusCode == 401 {
+                token = ""
+                isLoggedIn = false
+                print("Unauthenticated")
+                
+            } else {
+                let errorData = try JSONDecoder().decode(ErrorData.self, from: data).message
+                print("Error \(errorData)")
+                throw URLError(.cannotParseResponse)
+            }
+        }
     }
     
     func deleteTodo(_ id: String) async throws {
@@ -214,25 +273,39 @@ struct TodoHome: View {
         
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "DELETE"
+        urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         let (data, response) = try await URLSession.shared.data(for: urlRequest)
-        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            let errorData = try JSONDecoder().decode(ErrorData.self, from: data).message
-
-            print("Error \(errorData)")
-            throw URLError(.cannotParseResponse)
+        //        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+        //            let errorData = try JSONDecoder().decode(ErrorData.self, from: data).message
+        //
+        //            print("Error \(errorData)")
+        //            throw URLError(.cannotParseResponse)
+        //        }
+        //        let jsonData =  try JSONDecoder().decode(Todos.self, from: data)
+        //        print(jsonData.message)
+        //        todos = jsonData.todos
+        if let  response = response as? HTTPURLResponse {
+            
+            if  response.statusCode == 200 {
+                let jsonData =  try JSONDecoder().decode(Todos.self, from: data)
+                print(jsonData.message)
+                todos = jsonData.todos
+            } else if response.statusCode == 401 {
+                token = ""
+                isLoggedIn = false
+                print("Unauthenticated")
+                
+            } else {
+                let errorData = try JSONDecoder().decode(ErrorData.self, from: data).message
+                print("Error \(errorData)")
+                throw URLError(.cannotParseResponse)
+            }
         }
-        let jsonData =  try JSONDecoder().decode(Todos.self, from: data)
-        print(jsonData.message)
-        todos = jsonData.todos
     }
     
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        TodoHome()
-    }
-}
+
 
 
 typealias OnTap = (String, Bool, DismissAction) -> Void
@@ -299,5 +372,4 @@ struct SheetView: View {
         }
     }
 }
-
 
